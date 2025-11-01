@@ -1,0 +1,18 @@
+{
+  "name": "crawl",
+  "version": "1.0.0",
+  "description": "1. 行业新方向，革命性的方向，未来会只会有Ai+程序员\r 2. 大大提高工作效率\r 3. 本质是一段代码 （40G）\r 4. 向量存储",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "puppeteer": "^24.26.1",
+    "x-crawl": "^10.1.0"
+  }
+}

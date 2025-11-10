@@ -6,7 +6,7 @@ let arr = [1, 'a', true, undefined, null]
 // arr.unshift(Symbol(100))
 // arr.shift()
 
-// arr.splice(2, 1)
-arr.splice(4, 0, 123n)
+arr.splice(2, 1)
+// arr.splice(4, 0, 123n)
 
 console.log(arr);

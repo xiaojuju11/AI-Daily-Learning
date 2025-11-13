@@ -15,8 +15,8 @@ let str = 'yesseya'
 function isPalidrome(s) {
     let l = 0
     let r = s.length - 1
-    while(l < r) {
-        if(s[l] != s[r]) {
+    while (l < r) {
+        if (s[l] != s[r]) {
             return false
         }
         l++
@@ -26,3 +26,5 @@ function isPalidrome(s) {
 }
 
 console.log(isPalidrome(str));
+
+

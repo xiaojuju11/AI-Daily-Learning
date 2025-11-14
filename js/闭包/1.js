@@ -1,21 +1,41 @@
-// // var a = 1;
-// // console.log(a);
-
-// var a = 1;
-// function fn() {
-//     var b = 2;
-// }
-// fn();
-// console.log(b);
+// // // var a
+// // // console.log(a);
+// // // a = 1
 
 
-
-// // if (true) {
-// //     var a = 1;
+// // var a = 1
+// // function fn() {
+// //   var b = 2
 // // }
-// // console.log(a);
+// // fn()
+// // console.log(b);
 
-if(1){
-    let a = 1;
+
+// // // if (true) {
+// // //  var a = 1
+// // // }
+// // // console.log(a);
+
+// if (1) {
+
+// }
+
+// while(1) {
+
+// }
+
+// for (let i = 0; i < 6; i++) {
+
+// }
+
+
+// {
+
+  
+// }
+
+
+if (1) {
+  let a = 1
 }
 console.log(a);

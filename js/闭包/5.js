@@ -7,3 +7,8 @@ function foo() {
 }
 var myName = '冯总'
 foo()
+
+function test() {
+  console.log(1);
+}
+test()

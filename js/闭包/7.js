@@ -1,8 +1,12 @@
 var arr = []
+
 for (var i = 1; i <= 5; i++) {
-  arr.push(function() {
-    console.log(i);
-  })
+  function foo(j) {
+    arr.push(function() {
+      console.log(j);
+    })
+  }
+  foo(i)
 }
 
 

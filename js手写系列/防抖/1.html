@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>防抖核心示例</title>
+</head>
+<body>
+  <!-- 测试用提交按钮：高频点击触发源 -->
+  <button id="btn">提交</button>
+
+  <script>
+    // 步骤1：获取按钮DOM元素
+    let btn = document.getElementById('btn')
+
+    // 步骤2：定义核心业务逻辑（实际要执行的操作）
+    function handle(e) {
+      console.log('提交成功！', '事件信息：', e, '触发元素：', this);
+      // 真实场景替换为：接口请求/表单提交/数据处理等
+    }
+
+    // 步骤3：绑定点击事件（关键：用防抖函数包装业务逻辑）
+    // 注意：不是直接传handle，而是传debounce(handle, 1000)的返回值
+    btn.addEventListener('click', debounce(handle, 1000))
+
+    // 步骤4：实现核心防抖函数（高阶函数+闭包）
+    function debounce(fn, wait) {
+      // 定时器ID，闭包特性使其持续存在
+      var timer;
+      // 返回实际触发的事件处理函数
+      return function(...arg) {
+        // 清除上一次定时器，取消之前的执行计划
+        clearTimeout(timer);
+        // 重新设置定时器，开始新一轮倒计时
+        timer = setTimeout(() => {
+          // 绑定this和传递参数，确保业务函数执行上下文正确
+          fn.apply(this, arg);
+        }, wait); // wait=1000ms：两次点击间隔<1秒则重新计时
+      }
+    }
+  </script>
+</body>
+</html>

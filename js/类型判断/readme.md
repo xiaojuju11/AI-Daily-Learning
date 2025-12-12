@@ -15,8 +15,8 @@
 
 # Object.prototype.toString.call(x)
 - Object.prototype.toString()
-1. 
-2. 
+1. 如果this的值是undefined，返回[object Undefined]
+2. 如果this的值是null，返回[object Null]
 3. 将toString中的 this 值作为参数传递给ToObject，设 O 为调用 ToObject 的结果
 4. 设一个变量 class 为 O 的 [[class]] 内部属性值
 5. 返回一个字符串，这个字符串由 '[object ' + class + ']' 组成

@@ -5,7 +5,8 @@ function toString() {
   //   h: dadas,
   //   [[class]]: String
   // }
-  const className = O["[[class]]"]
+   
+  // const className = O.[[class]]
 }
 
 // console.log(toString.call(undefined));

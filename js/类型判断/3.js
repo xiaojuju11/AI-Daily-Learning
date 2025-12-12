@@ -14,9 +14,9 @@ let date = new Date()
 
 function getType(x) {
   const val = Object.prototype.toString.call(x)  // '[object String]'
-  const valType = val.slice(8, -1)
+  const valType = val.slice(-7, -1)             //  0123456789
   return valType
 }
-// console.log(getType(s));  // String
+console.log(getType(s));  // String
 
 Object.prototype.toString.call(arr)

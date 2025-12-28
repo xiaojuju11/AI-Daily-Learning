@@ -10,3 +10,9 @@
 
 # v17 +
 - 函数组件
+- hook为函数组件带来了活力
+1. useState 为函数组件定义了状态
+2. useEffect(() => {})  会在组件初次加载和每次重新渲染时触发 ==componentDidMount
+   useEffect(() => {}, [])  会在组件初次加载时触发
+   useEffect(() => {}, [x])  会在组件初次加载和每次 x 变化时触发 == componentDidUpdate
+   useEffect 中返回一个函数，该函数会在组件卸载前触发

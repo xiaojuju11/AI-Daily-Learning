@@ -20,6 +20,7 @@ dispatch每次调用就会导致传入的 reducer 函数触发
 5. useReducer(reducer, {result: 0})
 - 将复杂的逻辑运算全部封装在了 reducer 函数中， 使用时只需要 dispatch 一个 action，使用简洁
 - reducer 中修改state 的值必须返回一些新的对象，不能直接修改原对象，否则无法触发重新渲染
+
 6. useRef
 - 获取 dom
 - 创建一个变量，变量值更新不带来组件重新渲染，组件重新渲染不会重置这个变更量

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login.jsx'
 import './styles/app.less'
 import { useState } from 'react'
+import Register from './pages/Register.jsx'
 
 //登陆注册页面组件
 const AuthPage = () => {
@@ -24,6 +25,32 @@ const AuthPage = () => {
               <button className={`slider-tab ${activeTab === 'login' ? 'slider-tab--active' : ''}`} onClick={() => setActiveTab('login')}>登录</button>
               <button className={`slider-tab ${activeTab === 'register' ? 'slider-tab--active' : ''}`} onClick={() => setActiveTab('register')}>注册</button>
             </div>
+          </div>
+
+
+          {activeTab === 'login' ? (<Login />) : (<Register />)}
+
+          <div className="social-login">
+            <div className="divider">
+              <div className="divider-line"></div>
+              <div className="divider-text">第三方账号登录</div>
+              <div className="divider-line"></div>
+            </div>
+            <div className="oauth-buttons">
+              <button className="oauth-buttons--btn">
+                <i className="iconfont icon-weixin"></i>
+              </button>
+              <button className="oauth-buttons--btn">
+                <i className="iconfont icon-QQ"></i>
+              </button>
+              <button className="oauth-buttons--btn">
+                <i className="iconfont icon-pingguo"></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="auth-footnote">
+            <p>注册即表示您同意<a href="#">《用户协议》</a>和<a href="#">《隐私政策》</a></p>
           </div>
         </div>
       </div>

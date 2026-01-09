@@ -1,24 +1,57 @@
 import { useState } from 'react';
+import { Toast } from 'antd-mobile';
 import '../styles/login.less'
+import axios from '../http/index'
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('15779889503')
+  const [password, setPassword] = useState('123')
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()  // 阻止默认行为
     // 校验账号格式
     const phoneRegex = /^1[3-9]\d{9}$/;
     const majorChineseEmailRegex = /^[a-zA-Z0-9._%+-]+@(?:qq\.com|163\.com|126\.com|sina\.(?:com|cn)|sohu\.com|yeah\.net|gmail\.com|hotmail\.com|outlook\.com|foxmail\.com|aliyun\.com)$/i;
     if (!phoneRegex.test(phone) && !majorChineseEmailRegex.test(phone)) { // 手机号码非法
-      alert('请输入正确的账号')
+      Toast.show({
+        icon: 'fail',
+        content: '请输入正确的账号'
+      })
       return
     }
 
     // 向后端请求
+    const res = await axios.post('/api/auth/login', {
+      phone,
+      password
+    })
+    console.log(res)
+    // const res = await fetch('http://localhost:3000/api/auth/login', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     phone,
+    //     password
+    //   })
+    // })
     
+    // const data = await res.json()
+    // if(data.token){
+    //   Toast.show({
+    //     icon: 'success',
+    //     content: 'data.message'
+    //   })
+    // }else{
+    //   Toast.show({
+    //     icon: 'fail',
+    //     content: data.message
+    //   })
+    // }
+    // console.log(data)
   }
 
   return (
@@ -26,10 +59,10 @@ export default function Login() {
       <form className='auth-form' onSubmit={handleSubmit}>
         <div className="auth-form__group">
           <i className='iconfont icon-zhanghao'></i>
-          <input 
-            type="tel" 
-            placeholder='请输入手机号或邮箱' 
-            className='auth-form__input' 
+          <input
+            type="tel"
+            placeholder='请输入手机号或邮箱'
+            className='auth-form__input'
             value={phone}
             onChange={(e) => {
               setPhone(e.target.value)
@@ -38,10 +71,10 @@ export default function Login() {
         </div>
         <div className="auth-form__group">
           <i className='iconfont icon-mima'></i>
-          <input 
-            type="password" 
-            placeholder='请输入密码' 
-            className='auth-form__input' 
+          <input
+            type="password"
+            placeholder='请输入密码'
+            className='auth-form__input'
             value={password}
             onChange={(e) => {
               setPassword(e.target.value)

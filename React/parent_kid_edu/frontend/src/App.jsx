@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login.jsx'
+import Home from './pages/Home.jsx'
 import './styles/app.less'
 import { useState } from 'react'
 import Register from './pages/Register.jsx'
@@ -63,6 +64,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   )

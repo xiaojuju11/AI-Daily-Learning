@@ -13,9 +13,16 @@
    css : npm i less --save-dev    (less.css) 还有sass和stylus
 
 - ajax 错误统一处理：
-npm install axios 
+npm install axios  安装axios 代替fetch
+
 二次封装 axios
 
+- 浏览器的储存
+1. localStorage: 本地存储 （内存大小大约 5-8M， 永久有效）
+2. sessionStorage: 会话存储 （内存大小大约 5-8M， 关闭页面就自动消失）
+3. cookies：（内存大小大约 4K， 会自动携带在请求头， 后端控制它的有效时间）
+4. IndexDB：客户端的数据库存储 （无穷大， 永久有效）
+ 
 # 服务端
 - 定义多个接口
 1. npm i koa-router 安装路由，用来分门别类的定义后端接口地址

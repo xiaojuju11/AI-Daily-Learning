@@ -17,7 +17,7 @@ axios.interceptors.request.use(request => {
 
 //响应拦截
 axios.interceptors.response.use(
-    (reponse) => {//逻辑性错误
+    (response) => {//逻辑性错误
         if (response.data.code !== 1) {
             Toast.show({
                 icon: 'fail',
@@ -35,6 +35,10 @@ axios.interceptors.response.use(
                 })
 
                 if(res.status ==416){//没有权限
+                    //重定向去登录页
+                   setTimeout(() => {
+                    window.location.href = '/login'
+                   }, 2000);
 
                 }
                 return Promise.reject(response.data.message)

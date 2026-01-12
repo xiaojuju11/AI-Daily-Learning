@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Toast } from 'antd-mobile';
 import '../styles/login.less'
 import axios from '../http/index'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
   const [phone, setPhone] = useState('15779889503')
   const [password, setPassword] = useState('123')
-
+  const navigate = useNavigate()   // 路由跳转
 
   const handleSubmit = async (e) => {
     e.preventDefault()  // 阻止默认行为
@@ -28,6 +29,10 @@ export default function Login() {
       password
     })
     console.log(res)
+    localStorage.setItem('token', res.data.token)
+    navigate('/ ')
+    
+
     // const res = await fetch('http://localhost:3000/api/auth/login', {
     //   method: 'POST',
     //   headers: {

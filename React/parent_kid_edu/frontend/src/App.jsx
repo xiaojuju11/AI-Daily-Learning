@@ -7,7 +7,7 @@ import Register from './pages/Register.jsx'
 
 //登陆注册页面组件
 const AuthPage = () => {
-  const [activeTab, setActiveTab] = useState('login')
+  const [activeTab, setActiveTab] = useState('register')
 
   return (
     <div className="app-root">

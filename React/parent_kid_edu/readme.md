@@ -24,7 +24,7 @@ npm install axios  安装axios 代替fetch
 4. IndexDB：客户端的数据库存储 （无穷大， 永久有效）
  
 # 服务端
-- 定义多个接口
+- 定义登录接口:
 1. npm i koa-router 安装路由，用来分门别类的定义后端接口地址
 
 2. 路由层 : 定义接口 
@@ -38,6 +38,9 @@ npm install axios  安装axios 代替fetch
 5. npm i bcrypt 通过bcrypt.js 对密码进行加密解密
 
 6. token 令牌 -- 前端只有登录成功，后端会生成一个 token，并返回给前端，前端将 token 保存起来，并在未来的其他的接口请求时，将这个 token 携带上给后端，后端校验 token 合法后才返回正确的数据 npm i jsonwebtoken
+
+- 定义验证码接口：
+1. npm i svg-captcha
 
 # 跨域
 https://42.245.43.1： 8000/home

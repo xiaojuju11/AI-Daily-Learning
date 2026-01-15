@@ -7,9 +7,9 @@ export default function Layout() {
   const navigate = useNavigate()
 
   const tabs = [
-    {id: 'home', path: '/home', name: '首页', icon: 'icon-shouye',},
-    {id: 'ai', path: '/ai', name: 'AI小伙伴', icon: 'icon-bot', isHightLighted: true},
-    {id: 'mine', path: '/mine', name: '我的', icon: 'icon-wode'}
+    { id: 'home', path: '/home', name: '首页', icon: 'icon-shouye', },
+    { id: 'ai', path: '/ai', name: 'AI小伙伴', icon: 'icon-bot', isHightLighted: true },
+    { id: 'mine', path: '/mine', name: '我的', icon: 'icon-wode' }
   ]
 
   return (
@@ -17,13 +17,13 @@ export default function Layout() {
       <div className="layout-page">
         {/* 凡是 layout 的二级路由都展示在这里 */}
         <Outlet></Outlet>
-      </div>
+      </div> 
 
       <div className="bottom-nav">
         {
           tabs.map((tab) => (
-            <div 
-              key={tab.id} 
+            <div
+              key={tab.id}
               className={`bottom-nav__item ${tab.isHightLighted ? 'hightLighted' : ''} ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => {
                 setActiveTab(tab.id)

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/register.less'
-import axios from '../http/index'
-import { Toast } from 'antd-mobile';
+import axios from '../http'
+import { Toast } from 'antd-mobile'
 
 
-
-export default function Register() {
+export default function Register({ changeActiveTab }) {
   const [nickname, setNickname] = useState('')
   const [phone, setPhone] = useState('')
   const [captchaCode, setCaptchaCode] = useState('')
@@ -17,24 +16,24 @@ export default function Register() {
   async function loadCaptcha() {
     const res = await axios.get('/api/auth/captcha')
     setCaptchaId(res.data.captchaId)
-    setCaptchaSvg(res.data.svg)
+    setCaptchaSvg(res.data.captchaSvg)
   }
 
   useEffect(() => {
     loadCaptcha()
   }, [])
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => { 
     e.preventDefault()
     if (!nickname || !phone || !captchaCode || !password) {
       Toast.show({
-        icon: 'fail',
-        content: '请填写完整信息'
+        content: '请输入完整信息',
+        icon: 'fail'
       })
       return
     }
 
-    //校验格式
+    // 校验格式
     const phoneRegex = /^1[3-9]\d{9}$/;
     const majorChineseEmailRegex = /^[a-zA-Z0-9._%+-]+@(?:qq\.com|163\.com|126\.com|sina\.(?:com|cn)|sohu\.com|yeah\.net|gmail\.com|hotmail\.com|outlook\.com|foxmail\.com|aliyun\.com)$/i;
     if (!phoneRegex.test(phone) && !majorChineseEmailRegex.test(phone)) { // 手机号码非法
@@ -45,18 +44,25 @@ export default function Register() {
       return
     }
 
-    //loading
+    // loading
     setLoading(true)
 
-    //发请求
-    const res = await axios.post('/api/auth/register',{
+    // 发请求
+    const res = await axios.post('/api/auth/register', {
       nickname,
       phone,
       captchaCode,
       password,
       captchaId
     })
-    console.log(res)
+    // console.log(res);
+    Toast.show({
+      content: res.data.message,
+      icon: 'success'
+    })
+
+    changeActiveTab('login', {phone, password})
+
 
   }
 
@@ -76,7 +82,7 @@ export default function Register() {
           />
         </div>
         <div className="register-form__group">
-          <i className='iconfont icon-lujingbeifen3'></i>
+          <i className='iconfont icon-shoujihaoma-mian'></i>
           <input
             type="text"
             placeholder='请输入手机号或邮箱'
@@ -88,7 +94,7 @@ export default function Register() {
           />
         </div>
         <div className="register-form__group register-form__group--captcha">
-          <i className='iconfont icon-yanzhengma'></i>
+          <i className='iconfont icon-anquan'></i>
           <input
             type="text"
             placeholder='请输入验证码'
@@ -99,10 +105,11 @@ export default function Register() {
             }}
             maxLength={4}
           />
-          <div
-            className="register-form__captcha-img"
+          <div 
+            className="register-form__captcha-img" 
             title='点击刷新验证码'
-            dangerouslySetInnerHTML={{ __html: captchaSvg }}
+            dangerouslySetInnerHTML={{__html: captchaSvg}}
+            onClick={loadCaptcha}
           ></div>
         </div>
         <div className="register-form__group">
@@ -117,10 +124,11 @@ export default function Register() {
             }}
           />
         </div>
-        <button disabled={loading} type='submit' className='register-form__submit'>
-          {loading ? '注册中...' : '注册'}
 
+        <button type='submit' disabled={loading} className='register-form__submit'>
+          {loading ? '注册中...' : '注册'}
         </button>
+
       </form>
     </div>
   )

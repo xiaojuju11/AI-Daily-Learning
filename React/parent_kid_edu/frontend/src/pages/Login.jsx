@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { Toast } from 'antd-mobile';
 import '../styles/login.less'
-import axios from '../http/index'
+import { Toast } from 'antd-mobile'
+import axios from '../http'
 import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function Login({ user }) {
   const [loading, setLoading] = useState(false)
-  const [phone, setPhone] = useState('15779889503')
-  const [password, setPassword] = useState('123')
-  const navigate = useNavigate()   // 路由跳转
+  const [phone, setPhone] = useState(() => user.phone || '')
+  const [password, setPassword] = useState(() => user.password || '')
+  const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = async(e) => {
     e.preventDefault()  // 阻止默认行为
     // 校验账号格式
     const phoneRegex = /^1[3-9]\d{9}$/;
@@ -25,38 +26,32 @@ export default function Login() {
 
     // 向后端请求
     const res = await axios.post('/api/auth/login', {
-      phone,
+      phone, 
       password
     })
-    console.log(res)
+    console.log(res);
     localStorage.setItem('token', res.data.token)
-    navigate('/ ')
-    
+    navigate('/')
 
+    
     // const res = await fetch('http://localhost:3000/api/auth/login', {
     //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     phone,
-    //     password
-    //   })
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({phone, password})
     // })
-    
     // const data = await res.json()
-    // if(data.token){
+    // console.log(data);
+    // if (data.token) {
     //   Toast.show({
     //     icon: 'success',
-    //     content: 'data.message'
-    //   })
-    // }else{
-    //   Toast.show({
-    //     icon: 'fail',
     //     content: data.message
     //   })
+    // } else {
+
     // }
-    // console.log(data)
+    
+    
+
   }
 
   return (

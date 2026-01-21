@@ -4,6 +4,7 @@ import { Toast } from 'antd-mobile'
 import { useState } from 'react'
 import RecognitionResult from '../components/recognitionResult/Index'
 
+
 // AI识物
 export default function Recognition() {
   const [recognitionResult, setRecognitionResult] = useState(null)

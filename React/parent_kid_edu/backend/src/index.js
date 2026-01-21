@@ -3,6 +3,12 @@ const Router = require('koa-router')
 const cors = require('@koa/cors');
 const bodyParser = require('koa-bodyparser')
 const authRoutes = require('./routes/authRoutes.js')
+const cozeRoutes = require('./routes/coze-api.js')
+const dotenv = require('dotenv')
+
+dotenv.config({
+  path: ['.env.local','.env']
+})
 
 const app = new Koa()
 app.use(cors({//处理跨域
@@ -26,6 +32,7 @@ app
   .use(bodyParser())  // 先让 koa 拥有解析参数的能力
   .use(router.routes(), router.allowedMethods())
   .use(authRoutes.routes(), authRoutes.allowedMethods())
+  .use(cozeRoutes.routes(), cozeRoutes.allowedMethods())
 
   
 

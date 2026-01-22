@@ -1,8 +1,8 @@
-import ImageCaptureAndProcess from '../components/imageCaptureAndProcess/Index'
+import ImageCaptureAndProcess from '../components/imageCaptureAndProcess/index.jsx'
 import axios from '../http'
 import { Toast } from 'antd-mobile'
 import { useState } from 'react'
-import RecognitionResult from '../components/recognitionResult/Index'
+import RecognitionResult from '../components/recognitionResult/Index.jsx'
 
 
 // AI识物

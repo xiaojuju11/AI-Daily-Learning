@@ -3,7 +3,7 @@ const { recognition } = require('../controllers/cozeController.js')
 
 
 const router = new Router({
-    prefix: '/coze-api',
+    prefix: '/api/coze',
 })
 
 //ai识物

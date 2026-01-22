@@ -29,7 +29,7 @@ router.get('/test', (ctx) => {
 })
 
 app
-  .use(bodyParser())  // 先让 koa 拥有解析参数的能力
+  .use(bodyParser({ jsonLimit: '20mb' }))  // 先让 koa 拥有解析参数的能力，增加上传限制
   .use(router.routes(), router.allowedMethods())
   .use(authRoutes.routes(), authRoutes.allowedMethods())
   .use(cozeRoutes.routes(), cozeRoutes.allowedMethods())

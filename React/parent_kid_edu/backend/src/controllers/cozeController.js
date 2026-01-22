@@ -3,7 +3,7 @@ const axios = require('axios')
 async function recognition(ctx) {
   const { img } = ctx.request.body
   // 向工作流发请求
-  const params = { image_base64: img,image_file:'' }
+  const params = { image: img }
 
   try {
     const res = await axios({

@@ -3,6 +3,7 @@ import './index.less'
 import { useNavigate } from 'react-router-dom'
 
 
+
 export default function Index({ 
   theme = 'default', 
   onRecognition, 

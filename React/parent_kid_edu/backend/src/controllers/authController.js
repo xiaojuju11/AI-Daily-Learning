@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { findUserByPhone, createUser } = require('../models/userModel.js')
+const { findUserByPhone, createUser, findUserById } = require('../models/userModel.js')
 const { generateCaptcha, verifyCaptcha } = require('../utils/captcha.js')
 
 
@@ -15,23 +15,23 @@ async function login(ctx) {
   // 去数据库中查询是否存在相同的账号密码
   const user = await findUserByPhone(phone)
   // console.log(user);
-  
+
   if (!user) {
     ctx.status = 400
-    ctx.body = {message: '账号不存在'}
+    ctx.body = { message: '账号不存在' }
     return
   }
   // 校验密码
   const ok = await bcrypt.compare(password, user.password_hash)
   if (!ok) {
     ctx.status = 400
-    ctx.body = {message: '密码错误'}
+    ctx.body = { message: '密码错误' }
     return
   }
 
   // 生成一个 token
-  const token = jwt.sign({id: user.id, phone: user.phone}, '666', {expiresIn: '7d'})
-  
+  const token = jwt.sign({ id: user.id, phone: user.phone }, '666', { expiresIn: '7d' })
+
   ctx.body = {
     message: '登录成功',
     token,
@@ -44,7 +44,7 @@ async function login(ctx) {
 }
 
 // 生成图形验证码
-function getCaptcha(ctx) { 
+function getCaptcha(ctx) {
   try {
     const captcha = generateCaptcha()
     ctx.body = {
@@ -60,20 +60,20 @@ function getCaptcha(ctx) {
       error: error.message
     }
   }
-  
+
 }
 
 // 注册
 async function register(ctx) {
   const { nickname, phone, captchaId, captchaCode, password } = ctx.request.body
-  
+
   if (!nickname || !phone || !password) {
     ctx.status = 400
     ctx.body = {
       message: '账号密码和昵称都不能为空',
       code: 0
     }
-    return 
+    return
   }
 
   // 验证图形验证码
@@ -111,7 +111,7 @@ async function register(ctx) {
 
   // 写入数据库
   try {
-    const user = await createUser({phone, passwordHash, nickname})
+    const user = await createUser({ phone, passwordHash, nickname })
     ctx.body = {
       message: '注册成功',
       user: user,
@@ -122,14 +122,39 @@ async function register(ctx) {
     ctx.body = {
       message: '服务器异常',
       code: 0
-    } 
+    }
   }
 
 }
+// 获取用户信息
+async function getUserInfo(ctx) {
+  const id = ctx.userId
+  try {
+    const res = await findUserById(id)
+    console.log(res)
+    const data = {
+      code:1,
+      id: res.id,
+      phone: res.phone,
+      nickname: res.nickname,
+      create_time: res.create_time,
+      avatar: res.avatar
+    }
+    ctx.body= data
+  } catch (error) {
+    ctx.status = 400
+    ctx.body = {
+      message: '服务器异常',
+      code: 0
+    }
+  }
+}
+
 
 
 module.exports = {
   login,
   getCaptcha,
-  register
+  register,
+  getUserInfo
 }

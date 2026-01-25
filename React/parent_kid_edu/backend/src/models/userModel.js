@@ -17,12 +17,38 @@ async function createUser({phone, passwordHash, nickname}) {
 }
 
 async function findUserById(id) {
-  const [rows] = await db.execute('SELECT *  FROM users WHERE id = ? LIMIT 1', [id])
+  const [rows] = await db.execute('SELECT * FROM users WHERE id = ? LIMIT 1', [id])
   return rows[0]
 }
+
+async function updateUserInfo (params, id) {
+  // 处理字段名映射，将 avatar 转换为 avater
+  const fieldMapping = {
+    avatar: 'avater'
+  }
+  
+  const allKeys = ['id', 'avatar', 'avater', 'nickname', 'password_hash']
+  const currentkeys = Object.keys(params)  // ['avatar']
+  
+  currentkeys.forEach((item) => {
+    if (!allKeys.includes(item)) {
+      throw new Error('参数错误')
+    }
+  })
+
+  // 转换字段名
+  const mappedKeys = currentkeys.map((item) => fieldMapping[item] || item)
+  const _sql = mappedKeys.map((item) => `${item} = ?`).join(', ')   // ['avater = ?']
+
+  // 更新数据库
+  const [res] = await db.execute(`UPDATE users SET ${_sql} WHERE id = ?`, [...currentkeys.map((item) => params[item]), id])
+  return res
+}
+
 
 module.exports = {
   findUserByPhone,
   createUser,
-  findUserById
+  findUserById,
+  updateUserInfo
 }

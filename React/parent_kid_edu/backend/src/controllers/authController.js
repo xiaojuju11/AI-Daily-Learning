@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { findUserByPhone, createUser, findUserById } = require('../models/userModel.js')
+const { findUserByPhone, createUser, findUserById, updateUserInfo } = require('../models/userModel.js')
 const { generateCaptcha, verifyCaptcha } = require('../utils/captcha.js')
 
 
@@ -126,26 +126,99 @@ async function register(ctx) {
   }
 
 }
+
 // 获取用户信息
 async function getUserInfo(ctx) {
   const id = ctx.userId
   try {
     const res = await findUserById(id)
-    console.log(res)
+    console.log('User info from database:', res)
+    
     const data = {
-      code:1,
+      code: 1,
       id: res.id,
+      create_time: res.create_time,
       phone: res.phone,
       nickname: res.nickname,
-      create_time: res.create_time,
-      avatar: res.avatar
+      avatar: res.avater
     }
-    ctx.body= data
+    ctx.body = data
   } catch (error) {
+    console.error('Get user info error:', error)
     ctx.status = 400
     ctx.body = {
-      message: '服务器异常',
-      code: 0
+      code: 0,
+      mesaage: '查找用户数据失败'
+    }
+  }
+}
+
+// 更新用户信息
+async function updateUser(ctx) {
+  const id = ctx.userId
+  const params = ctx.request.body
+  
+  console.log('Update user params:', params)
+  console.log('User ID:', id)
+
+  try {
+    const res = await updateUserInfo(params, id)
+    console.log('Update result:', res)
+    
+    if (res.affectedRows) {
+      ctx.body = {
+        code: 1,
+        message: '更新成功'
+      }
+    } else {
+      ctx.status = 400
+      ctx.body = {
+        code: 0,
+        message: '更新失败'
+      }
+    }
+  } catch (error) {
+    console.error('Update user error:', error)
+    ctx.status = 500
+    ctx.body = {
+      code: 0,
+      message: error.message
+    }
+  }
+
+}
+
+// 更新密码
+async function updatePassword(ctx) {
+  const id = ctx.userId
+  const { oldPassword, newPassword } = ctx.request.body
+  try {
+    const user = await findUserById(id)
+    const ok = await bcrypt.compare(oldPassword, user.password_hash)
+    if (!ok) {
+      ctx.status = 400
+      ctx.body = { message: '旧密码错误', code: 0 }
+      return
+    }
+    const password_hash = await bcrypt.hash(newPassword, 10)
+    const res = await updateUserInfo({ password_hash }, id)
+    if (res.affectedRows) {
+      ctx.body = {
+        code: 1,
+        message: '密码更新成功'
+      }
+    } else {
+      ctx.status = 400
+      ctx.body = {
+        code: 0,
+        message: '密码更新失败'
+      }
+    }
+  } catch (error) {
+    ctx.status = 500
+    ctx.body = {
+      code: 0,
+      message: error.message
     }
   }
 }
@@ -156,5 +229,7 @@ module.exports = {
   login,
   getCaptcha,
   register,
-  getUserInfo
+  getUserInfo,
+  updateUser,
+  updatePassword
 }

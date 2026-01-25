@@ -140,7 +140,7 @@ async function getUserInfo(ctx) {
       create_time: res.create_time,
       phone: res.phone,
       nickname: res.nickname,
-      avatar: res.avater
+      avatar: res.avatar
     }
     ctx.body = data
   } catch (error) {

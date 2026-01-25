@@ -22,12 +22,7 @@ async function findUserById(id) {
 }
 
 async function updateUserInfo (params, id) {
-  // 处理字段名映射，将 avatar 转换为 avater
-  const fieldMapping = {
-    avatar: 'avater'
-  }
-  
-  const allKeys = ['id', 'avatar', 'avater', 'nickname', 'password_hash']
+  const allKeys = ['id', 'avatar', 'nickname', 'password_hash']
   const currentkeys = Object.keys(params)  // ['avatar']
   
   currentkeys.forEach((item) => {
@@ -36,9 +31,7 @@ async function updateUserInfo (params, id) {
     }
   })
 
-  // 转换字段名
-  const mappedKeys = currentkeys.map((item) => fieldMapping[item] || item)
-  const _sql = mappedKeys.map((item) => `${item} = ?`).join(', ')   // ['avater = ?']
+  const _sql = currentkeys.map((item) => `${item} = ?`).join(', ')   // ['avatar = ?']
 
   // 更新数据库
   const [res] = await db.execute(`UPDATE users SET ${_sql} WHERE id = ?`, [...currentkeys.map((item) => params[item]), id])

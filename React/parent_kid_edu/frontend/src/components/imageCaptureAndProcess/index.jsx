@@ -3,7 +3,6 @@ import './index.less'
 import { useNavigate } from 'react-router-dom'
 
 
-
 export default function Index({ 
   theme = 'default', 
   onRecognition, 
@@ -14,6 +13,8 @@ export default function Index({
   const [selectedImage, setSelectedImage] = useState(null)
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
+  const videoRef = useRef(null)
+  const canvasRef = useRef(null)
 
   // 主题颜色配置
   const themeConfig = {
@@ -47,13 +48,46 @@ export default function Index({
     }
   }
 
+  // 拍照
+  const handleTakePhoto = async () => {
+    // 打开摄像头
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+    videoRef.current.srcObject = stream
+    videoRef.current.play()
+
+    setTimeout(() => {
+      const canvas =  canvasRef.current
+      const context = canvas.getContext('2d') // 创建二维画布
+      canvas.width = videoRef.current.videoWidth
+      canvas.height = videoRef.current.videoHeight
+      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height)
+
+      // 停止摄像头
+      stream.getTracks().forEach(track => track.stop())
+
+      // 将 canvas 转换成 blob格式
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const imageUrl = URL.createObjectURL(blob)
+          setSelectedImage(imageUrl)  // 预览图片
+
+          const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' })
+          // console.log(file);
+          // ai 识别
+          onRecognition(file)
+        }
+      }, 'image/jpeg', 0.8)
+      
+    }, 1000) 
+
+  }
+
   // 清除预览
   const handleClear = () => {
     setSelectedImage(null)
     fileInputRef.current.value = null
     
   }
-  
 
   return (
     <div className='image-capture-root'>
@@ -91,6 +125,7 @@ export default function Index({
           <button 
             className='image-capture-btn image-capture-btn--primary'
             style={{backgroundColor: currentTheme.primary}}
+            onClick={handleTakePhoto}
           >
             <i className="iconfont icon-xiangji"></i>
             拍照
@@ -117,6 +152,10 @@ export default function Index({
           children
         }
       </main>
+
+      <video ref={videoRef}></video>
+      {/* 画布，用来绘制视频帧 */}
+      <canvas ref={canvasRef}></canvas>
 
     </div>
   )

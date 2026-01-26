@@ -4,18 +4,15 @@ const cors = require('@koa/cors');
 const bodyParser = require('koa-bodyparser')
 const authRoutes = require('./routes/authRoutes.js')
 const cozeRoutes = require('./routes/coze-api.js')
+const deepseekRoutes = require('./routes/deepseek-api.js')
 const dotenv = require('dotenv')
 
 dotenv.config({
-  path: ['.env.local','.env']
+  path: ['.env.local', '.env']
 })
 
 const app = new Koa()
-app.use(cors({//处理跨域
-  origin() {
-    return 'http://localhost:5173'
-  },
-}));
+app.use(cors());
 
 // 测试接口
 const router = new Router({
@@ -29,11 +26,11 @@ router.get('/test', (ctx) => {
 })
 
 app
-  .use(bodyParser({ jsonLimit: '20mb' }))  // 先让 koa 拥有解析参数的能力，增加上传限制
+  .use(bodyParser())  // 先让 koa 拥有解析参数的能力
   .use(router.routes(), router.allowedMethods())
   .use(authRoutes.routes(), authRoutes.allowedMethods())
   .use(cozeRoutes.routes(), cozeRoutes.allowedMethods())
-
+  .use(deepseekRoutes.routes(), deepseekRoutes.allowedMethods())
   
 
 app.listen(3000, () => {

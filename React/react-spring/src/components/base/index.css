@@ -1,0 +1,33 @@
+.title {
+    background-color:green;
+    width: 400px;
+    color: #fff;
+    transition: all 1s linear;
+    transform: scale(1) rotateZ(0deg);
+    transform-origin: center center;
+    animation:BS 2s linear infinite;
+}
+.w-600{
+    width: 600px;
+    height: 200px;
+    background-color:yellow;
+    transform: scale(0.5) rotateZ(90deg);
+}
+
+@keyframes BS {
+    0%{
+        transform: scale(1) rotateZ(0deg);
+    }
+    25%{
+        transform: scale(0.5) rotateZ(90deg);
+    }
+    50%{
+        transform: scale(0.25) rotateZ(90deg);
+    }
+    75%{
+        transform: scale(0.5) rotateZ(180deg);
+    }
+    100%{
+        transform: scale(1) rotateZ(180deg);
+    }
+}

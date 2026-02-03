@@ -1,0 +1,48 @@
+import React,{useReducer,useCallback,useMemo,memo} from 'react'
+
+interface Data{
+    result:number
+}
+
+interface Action{
+    type:string
+    num:number
+}
+
+
+export default function App4() {
+    const [res,dispatch] = useReducer(reducer,{result:0})
+
+    function reducer(state:Data,action:Action){
+        switch(action.type){
+            case 'add':
+                return {result:state.result+action.num}
+            case 'minus':
+                return {result:state.result-action.num}
+            default:
+                return state
+        }
+    }
+
+    const count = useMemo(()=>{
+        console.log('useMemo')
+        return res.result*10
+    },[])
+
+    const cb = useCallback(()=>{
+        console.log('cb')
+    },[])
+
+    return (
+        <div>
+            <div onClick={()=>dispatch({type:'add',num:2})}>加</div>
+            <div onClick={()=>dispatch({type:'minus',num:1})}>减</div>
+            <h1>{res.result} -- {count}</h1>
+            <Child count={100} cb={cb} />
+        </div>
+    )
+}
+
+const Child =memo((props:{count:number,cb:()=>Function})=>{
+    return <h2>{props.count}</h2>
+})

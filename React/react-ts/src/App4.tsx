@@ -20,7 +20,9 @@ export default function App4() {
             case 'minus':
                 return {result:state.result-action.num}
             default:
-                return state
+                return {
+                    result:0
+                }
         }
     }
 

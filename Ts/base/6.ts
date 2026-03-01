@@ -18,6 +18,17 @@
 //     age: 18,
 // }
 
+// type person {
+//     name: string
+//     age: number
+//     sex?: unknown
+// }
+
+// const p:person = {
+//     name: '张三',
+//     age: 18,
+// }
+
 //联合类型
 // type Person = string | number | boolean
 // const a:Person = 'hello'

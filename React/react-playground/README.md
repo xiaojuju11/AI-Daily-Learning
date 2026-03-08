@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# 将tsx 编译为js
+@babel/standalone  (bable的浏览器版本)
+@types/babel__standalone  (bable的浏览器版本的类型定义)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 资源处理
+import { useState } from "react"; 
+import Aaa from './Aaa.tsx'
 
-Currently, two official plugins are available:
+需要用到：
+babel （parse、 transform、 generate） AST -- 抽象语法树
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+const url = URL.createObjectURL(new Blob([code1], {type: 'application/javascript'})) 将某份资源处理成一个 blob 地址，并在 babel 编译的过程中将 from "xxx" 修改成成 from "blob:https://xxxxxx"
 
-## React Compiler
+# bebel
+@babel/core 
+@types/babel__core
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 引入React的原理
+  <script type="importmap">
+    {
+      "imports": {
+          "react": "https://esm.sh/react@18.2.0"
+      }
+    }
+  </script>
 
-## Expanding the ESLint configuration
+  <script type="module">
+    import React from "react";
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+    console.log(React);
+  </script>
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# 代码提示器
+npm i @monaco-editor/react
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 预览
+iframe 标签
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+左侧的 tsx 代码被编译，编译完后引入带一个 html文件中，并将这个 html 文件展示在iframe中

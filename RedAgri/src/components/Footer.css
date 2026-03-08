@@ -1,0 +1,29 @@
+.footer {
+  background-color: #FAF9F6;
+  padding: 24px 0;
+  border-top: 1px solid #E8E8E8;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.footer-declaration {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.footer-partners {
+  font-size: 12px;
+  color: #999;
+}
+
+.footer-partners p {
+  margin: 0;
+}

@@ -1,0 +1,347 @@
+.traceability {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  border-radius: 0;
+}
+
+.traceability-content {
+  padding: 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-radius: 0;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+  text-align: center;
+  margin-bottom: 32px;
+  position: relative;
+  border-radius: 0;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* 二维码区域样式 */
+.qrcode-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--card-background);
+  padding: 40px 24px;
+  margin-bottom: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.qrcode-section:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: translateY(-4px);
+}
+
+.qrcode-container {
+  margin-bottom: 24px;
+  padding: 24px;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.qrcode-container:hover {
+  box-shadow: var(--box-shadow-hover);
+  transform: scale(1.02);
+}
+
+.qrcode-desc {
+  font-size: 16px;
+  color: var(--text-light);
+  margin-bottom: 32px;
+  text-align: center;
+  line-height: 1.5;
+  border-radius: 0;
+}
+
+.view-result-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-result-btn:hover {
+  background-color: var(--primary-light);
+  box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 结果区域样式 */
+.result-section {
+  background-color: var(--card-background);
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: box-shadow 0.3s ease;
+}
+
+.result-section:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.result-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 24px;
+  gap: 16px;
+  border-radius: 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  position: relative;
+  border-radius: 0;
+}
+
+.tab-btn:hover {
+  color: var(--primary-color);
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  font-weight: 600;
+}
+
+.tab-content {
+  min-height: 300px;
+  padding: 16px 0;
+}
+
+/* 红色故事样式 */
+.story-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 16px;
+  border-radius: 0;
+}
+
+.story-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-light);
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+.story-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: var(--border-radius);
+  margin-top: 16px;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.story-image:hover {
+  transform: scale(1.02);
+  box-shadow: var(--box-shadow-hover);
+}
+
+/* 农户信息样式 */
+.farmer-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+.farmer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-radius: 0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #FAF9F6;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.info-item:hover {
+  background-color: #F0F0F0;
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(196, 30, 58, 0.1);
+  transform: translateY(-2px);
+}
+
+.info-item label {
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.info-item span {
+  color: var(--text-light);
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 0;
+}
+
+/* 资金流向样式 */
+.fund-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+.fund-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-radius: 0;
+}
+
+.flow-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #FAF9F6;
+  border-radius: var(--border-radius);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+.flow-item:hover {
+  background-color: #F0F0F0;
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(196, 30, 58, 0.1);
+  transform: translateY(-2px);
+}
+
+.flow-label {
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.flow-value {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0;
+}
+
+.fund-note {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-top: 16px;
+  font-style: italic;
+  line-height: 1.5;
+  padding: 16px;
+  background-color: #F0F9FF;
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--secondary-color);
+}
+
+/* 返回按钮样式 */
+.back-btn {
+  margin-top: 32px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.back-btn:hover {
+  background-color: var(--secondary-light);
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+  transform: translateY(-2px);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .qrcode-section {
+    padding: 24px 16px;
+  }
+  
+  .qrcode-container {
+    padding: 16px;
+  }
+  
+  .result-section {
+    padding: 16px;
+  }
+  
+  .tab-btn {
+    font-size: 14px;
+    padding: 12px 0;
+  }
+  
+  .info-item {
+    padding: 12px;
+  }
+  
+  .flow-item {
+    padding: 12px;
+  }
+  
+  .story-image {
+    max-width: 100%;
+  }
+  
+  .story-content h3,
+  .farmer-content h3,
+  .fund-content h3 {
+    font-size: 18px;
+  }
+  
+  .story-content p {
+    font-size: 14px;
+  }
+}

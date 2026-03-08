@@ -1,0 +1,79 @@
+:root {
+  font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #212121;
+  background-color: #F5F5F5;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #F5F5F5;
+}
+
+a {
+  color: #C41E3A;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #A61D2F;
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 12px;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 全局变量 */
+:root {
+  --primary-color: #C41E3A;
+  --primary-light: #E63946;
+  --primary-dark: #A61D2F;
+  --secondary-color: #2E7D32;
+  --secondary-light: #4CAF50;
+  --background-color: #F5F5F5;
+  --card-background: #FFFFFF;
+  --text-color: #212121;
+  --text-light: #666666;
+  --text-muted: #9E9E9E;
+  --border-color: #E0E0E0;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --box-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 标题样式 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 16px;
+}

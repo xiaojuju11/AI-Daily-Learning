@@ -30,7 +30,7 @@ const Header = () => {
             ←
           </button>
         )}
-        <h1 className="header-logo">红银兴农</h1>
+        <h1 className="header-logo">银山弘农</h1>
         {isLoggedIn ? (
           <div className="header-user">
             <span className="header-role">{userRole === 'consumer' ? '消费者' : userRole === 'farmer' ? '农户' : '志愿者'}</span>

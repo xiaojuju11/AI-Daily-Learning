@@ -15,7 +15,7 @@ const Shop = () => {
     {
       id: 1,
       name: '有机草莓',
-      price: 68,
+      price: 28,
       公益说明: '每购买一盒草莓，将为老区果农提供8元的生产补贴',
       image: strawberrySrc,
       规格: '500g/盒',
@@ -24,7 +24,7 @@ const Shop = () => {
     {
       id: 2,
       name: '红心柚子',
-      price: 45,
+      price: 38,
       公益说明: '每购买一个柚子，将为山区柚农提供5元的生产补贴',
       image: youziSrc,
       规格: '2.5kg/个',
@@ -33,7 +33,7 @@ const Shop = () => {
     {
       id: 3,
       name: '赣南脐橙',
-      price: 58,
+      price: 29,
       公益说明: '每购买一箱脐橙，将为当地果农提供10元的生活补贴',
       image: orangeSrc,
       规格: '5kg/箱',

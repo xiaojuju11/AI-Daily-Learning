@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js?xx=123"></script> -->
+</head>
+<body>
+  <!-- <img src="https://qcloud.dpfile.com/pc/h0jK_DfiFV_fQjL3CQpOVgRTnPIjwQlmZHNHjRv2n3Yrg3bZmogVH6Ln8ywR4Guo.jpg" alt=""> -->
+   <script>
+      function jsonp(url, cb) {
+        return new Promise((resolve, reject) => {
+          const script = document.createElement('script') 
+          script.src = `${url}?cb=${cb}` 
+
+          window[cb] = function(data) {
+            resolve(data)
+          }
+          document.body.appendChild(script)
+        })
+      }
+
+      jsonp('http://localhost:3000', 'callback').then(res => {
+        console.log(res);
+      })
+   </script>
+</body>
+</html>

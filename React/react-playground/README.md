@@ -37,3 +37,10 @@ npm i @monaco-editor/react
 iframe 标签
 
 左侧的 tsx 代码被编译，编译完后引入带一个 html文件中，并将这个 html 文件展示在iframe中
+
+# allotment 布局
+npm i allotment
+
+npm i -D sass
+
+npm i @typescript/ata

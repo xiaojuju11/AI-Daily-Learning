@@ -1,7 +1,6 @@
 .home {
   min-height: 100vh;
   background-color: var(--background-color);
-  font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   border-radius: 0;
 }
 
@@ -43,7 +42,10 @@
   margin: 0 0 12px 0;
   font-size: 28px;
   font-weight: 700;
-  color: #FFD700;
+  background: linear-gradient(135deg, oklch(0.9 0.15 90), oklch(0.8 0.1 60));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   border-radius: 0;
 }
@@ -97,17 +99,17 @@
   width: 100px;
   height: 100px;
   border-radius: 24px;
-  background: linear-gradient(135deg, #FFF8F8, #FFF0F0);
+  background: linear-gradient(135deg, oklch(0.98 0.02 10), oklch(0.95 0.05 5));
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  box-shadow: 0 6px 16px rgba(196, 30, 58, 0.15);
+  box-shadow: 0 6px 16px oklch(0.5 0.2 25 / 0.15);
   transition: all 0.3s ease;
 }
 
 .entrance-icon:hover {
-  box-shadow: 0 8px 20px rgba(196, 30, 58, 0.25);
+  box-shadow: 0 8px 20px oklch(0.5 0.2 25 / 0.25);
   transform: scale(1.1);
 }
 
@@ -161,7 +163,7 @@
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background-color: var(--primary-color);
+  background: linear-gradient(90deg, oklch(88.412% 0.07145 197.115), oklch(50.125% 0.14141 22.685));
   border-radius: 2px;
 }
 
@@ -190,7 +192,10 @@
 .achievement-number {
   font-size: 32px;
   font-weight: 700;
-  color: var(--primary-color);
+  background: linear-gradient(135deg, oklch(0.75 0.28 20), oklch(0.6 0.3 15));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 12px;
   line-height: 1;
   border-radius: 0;

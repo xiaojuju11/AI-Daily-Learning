@@ -1,5 +1,5 @@
 :root {
-  font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'STXingkai', '华文行楷', 'STKaiti', '华文楷体', 'FZShuTi', '方正舒体', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -55,9 +55,9 @@ button:hover {
 
 /* 全局变量 */
 :root {
-  --primary-color: #C41E3A;
-  --primary-light: #E63946;
-  --primary-dark: #A61D2F;
+  --primary-color: oklch(0.7 0.25 25);
+  --primary-light: oklch(0.75 0.28 20);
+  --primary-dark: oklch(0.6 0.3 15);
   --secondary-color: #2E7D32;
   --secondary-light: #4CAF50;
   --background-color: #F5F5F5;
@@ -76,4 +76,23 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: var(--text-color);
   margin-bottom: 16px;
+}
+
+/* 加载和错误状态样式 */
+.loading {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.error {
+  text-align: center;
+  padding: 40px 0;
+  color: #ff4d4f;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 0;
 }

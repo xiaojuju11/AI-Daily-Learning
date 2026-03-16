@@ -5,9 +5,12 @@ import './Accounting.css';
 
 const Accounting = () => {
   const [expenses, setExpenses] = useState([
-    { id: 1, category: '种苗', amount: 0 },
-    { id: 2, category: '化肥', amount: 0 },
-    { id: 3, category: '人工', amount: 0 }
+    { id: 1, category: '草莓种苗', amount: 0 },
+    { id: 2, category: '柚子树苗', amount: 0 },
+    { id: 3, category: '脐橙树苗', amount: 0 },
+    { id: 4, category: '有机肥料', amount: 0 },
+    { id: 5, category: '种植人工', amount: 0 },
+    { id: 6, category: '采摘人工', amount: 0 }
   ]);
   const [total, setTotal] = useState(0);
   const [message, setMessage] = useState('');
@@ -79,7 +82,7 @@ const Accounting = () => {
             <textarea 
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="请输入留言..."
+              placeholder="请输入您对助农项目的建议或反馈..."
               rows={4}
             />
             <button type="submit" className="submit-btn">提交留言</button>

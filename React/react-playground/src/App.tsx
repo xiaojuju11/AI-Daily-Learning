@@ -1,9 +1,11 @@
-import iframeRaw from './iframe.html?raw'
+import React from 'react'
+import ReactPlayground from './ReactPlayground'
+import './App.scss'
 
-const iframeUrl = URL.createObjectURL(new Blob([iframeRaw], { type: 'text/html' }))
+
 
 export default function App() {
-    return (
-        <iframe src={iframeUrl} style={{ width: '300px', height: '300px' }} />
-    )
+  return (
+    <ReactPlayground />
+  )
 }

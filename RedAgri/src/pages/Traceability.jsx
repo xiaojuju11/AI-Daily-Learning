@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { api } from '../services/api';
 import './Traceability.css';
 
 const Traceability = () => {
   const [showResult, setShowResult] = useState(false);
   const [activeTab, setActiveTab] = useState('story');
+  const [traceabilityData, setTraceabilityData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleViewResult = () => {
-    setShowResult(true);
+  const handleViewResult = async () => {
+    setLoading(true);
+    try {
+      const response = await api.getTraceabilityData();
+      if (response.success) {
+        setTraceabilityData(response.data);
+        setShowResult(true);
+      } else {
+        setError(response.error);
+      }
+    } catch (err) {
+      setError('加载溯源数据失败');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -33,7 +50,11 @@ const Traceability = () => {
               查看溯源结果
             </button>
           </div>
-        ) : (
+        ) : loading ? (
+          <div className="loading">加载中...</div>
+        ) : error ? (
+          <div className="error">{error}</div>
+        ) : traceabilityData ? (
           <div className="result-section">
             <div className="result-tabs">
               <button 
@@ -59,10 +80,10 @@ const Traceability = () => {
             <div className="tab-content">
               {activeTab === 'story' && (
                 <div className="story-content">
-                  <h3>红色故事</h3>
-                  <p>在革命老区，有一位老党员王大爷，他始终坚持用传统方法种植有机大米。通过红银兴农平台，他的大米不仅卖出了好价钱，还带动了周边农户共同致富。每一粒大米都承载着红色基因和对美好生活的向往。</p>
+                  <h3>{traceabilityData.story.title}</h3>
+                  <p>{traceabilityData.story.content}</p>
                   <img 
-                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=red%20revolutionary%20story%20with%20farmer%20and%20rice%20field&image_size=portrait_4_3" 
+                    src={traceabilityData.story.image} 
                     alt="红色故事" 
                     className="story-image"
                   />
@@ -75,23 +96,23 @@ const Traceability = () => {
                   <div className="farmer-info">
                     <div className="info-item">
                       <label>姓名：</label>
-                      <span>王建国</span>
+                      <span>{traceabilityData.farmer.name}</span>
                     </div>
                     <div className="info-item">
                       <label>地址：</label>
-                      <span>革命老区红安县</span>
+                      <span>{traceabilityData.farmer.address}</span>
                     </div>
                     <div className="info-item">
                       <label>种植面积：</label>
-                      <span>10亩</span>
+                      <span>{traceabilityData.farmer.plantingArea}</span>
                     </div>
                     <div className="info-item">
                       <label>种植年限：</label>
-                      <span>20年</span>
+                      <span>{traceabilityData.farmer.plantingYears}</span>
                     </div>
                     <div className="info-item">
                       <label>联系方式：</label>
-                      <span>138****1234</span>
+                      <span>{traceabilityData.farmer.contact}</span>
                     </div>
                   </div>
                 </div>
@@ -103,22 +124,22 @@ const Traceability = () => {
                   <div className="fund-flow">
                     <div className="flow-item">
                       <span className="flow-label">产品售价：</span>
-                      <span className="flow-value">¥50.00</span>
+                      <span className="flow-value">¥{traceabilityData.fund.productPrice.toFixed(2)}</span>
                     </div>
                     <div className="flow-item">
                       <span className="flow-label">农户收入：</span>
-                      <span className="flow-value">¥35.00 (70%)</span>
+                      <span className="flow-value">¥{traceabilityData.fund.farmerIncome.toFixed(2)} ({traceabilityData.fund.farmerIncomePercentage}%)</span>
                     </div>
                     <div className="flow-item">
                       <span className="flow-label">平台运营：</span>
-                      <span className="flow-value">¥5.00 (10%)</span>
+                      <span className="flow-value">¥{traceabilityData.fund.platformOperation.toFixed(2)} ({traceabilityData.fund.platformOperationPercentage}%)</span>
                     </div>
                     <div className="flow-item">
                       <span className="flow-label">公益基金：</span>
-                      <span className="flow-value">¥10.00 (20%)</span>
+                      <span className="flow-value">¥{traceabilityData.fund.publicWelfareFund.toFixed(2)} ({traceabilityData.fund.publicWelfareFundPercentage}%)</span>
                     </div>
                   </div>
-                  <p className="fund-note">公益基金将用于支持当地教育和基础设施建设。</p>
+                  <p className="fund-note">{traceabilityData.fund.note}</p>
                 </div>
               )}
             </div>
@@ -127,6 +148,8 @@ const Traceability = () => {
               返回
             </button>
           </div>
+        ) : (
+          <div className="error">无溯源数据</div>
         )}
       </div>
       

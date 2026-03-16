@@ -2,36 +2,41 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { useAppContext } from '../context/AppContext';
+import { api } from '../services/api';
 import './Login.css';
 
 const Login = () => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('consumer');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { login } = useAppContext();
 
-  // 模拟数据库中的用户数据
-  const fakeUsers = [
-    { phone: '13800138000', password: '123456', role: 'consumer' },
-    { phone: '13900139000', password: '123456', role: 'farmer' },
-    { phone: '13700137000', password: '123456', role: 'volunteer' }
-  ];
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // 模拟登录验证
-    const user = fakeUsers.find(
-      u => u.phone === phone && u.password === password && u.role === role
-    );
+    setLoading(true);
+    setError(null);
     
-    if (user) {
-      // 保存角色权限至本地
-      localStorage.setItem('userRole', role);
-      // 跳转首页
-      navigate('/');
-    } else {
-      // 登录失败提示
-      alert('手机号、密码或角色不匹配，请检查后重试');
+    try {
+      // 调用API登录
+      const response = await api.login(role);
+      if (response.success) {
+        // 使用context登录
+        login(role);
+        // 跳转首页
+        navigate('/');
+      } else {
+        setError('登录失败：' + response.error);
+        alert('登录失败：' + response.error);
+      }
+    } catch (err) {
+      setError('登录失败：' + err.message);
+      alert('登录失败：' + err.message);
+    } finally {
+      setLoading(false);
     }
   };
 

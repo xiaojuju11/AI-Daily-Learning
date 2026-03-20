@@ -15,3 +15,5 @@ https://www.baidu.com/
 2. cors: 后端设置响应头，允许指定的域名跨域访问。
 
 3. node代理  (nginx): 利用nodejs的http模块，创建一个代理服务器，将前端请求转发到后端服务器，避免跨域问题。
+
+

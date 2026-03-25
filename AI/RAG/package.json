@@ -1,0 +1,12 @@
+{
+  "name": "rag",
+  "version": "1.0.0",
+  "description": "- Large Language Model\r # Agent\r 智能体:在扣子平台构建的工作流可以发布到掘金，豆包的那种",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

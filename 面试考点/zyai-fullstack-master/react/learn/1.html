@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <ul id="ul">
+    <li v-for="item in arr">{{item}}</li>
+  </ul> -->
+  
+  <ul id="ul">
+    {
+      arr.map(item => {
+        return <li>{item}</li>
+      })
+      <!-- [
+        <li> 有何不可</li>,
+        <li> 庐州月</li>,
+        <li> 等你下课</li>
+      ] -->
+    }
+  </ul>
+
+  <script>
+    const arr = ['有何不可', '庐州月', '等你下课']
+    // for (let i = 0; i < arr.length; i++) {
+    //   const li = document.createElement('li')
+    //   li.textContent = arr[i]
+    //   document.getElementById('ul').appendChild(li)
+    // }
+  </script>
+</body>
+</html>

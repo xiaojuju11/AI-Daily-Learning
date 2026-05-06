@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myWebSocket(url, params) {
+      return new Promise((resolve, reject) => {
+        const socket = new WebSocket(url)
+        socket.onopen = function() {  // 跟服务端建立连接成功
+          console.log('连接成功');
+          socket.send(JSON.stringify(params)) // 连接成功后，发送参数
+        }
+        socket.onmessage = function(e) {  // 服务端返回数据
+          console.log('服务端返回数据', e.data);
+          resolve(e.data)
+        }
+      })
+    }
+
+    myWebSocket('ws://localhost:3000', {age: 18})
+  </script>
+</body>
+</html>

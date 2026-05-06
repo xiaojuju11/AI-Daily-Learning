@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn">提交</button>
+
+  <script>
+    let btn = document.getElementById('btn')
+
+    function handle(e) {   // e 事件参数，默认存在，用来描述这个事件详情
+      console.log('提交', e, this);
+    }
+    btn.addEventListener('click', debounce(handle, 1000))
+
+
+    function debounce(fn, wait) {
+      var timer;
+      return function(...arg) {  // 鼠标每次点击触发的是我
+        // let _this = this
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          fn.apply(this, arg)
+        }, wait)
+      }
+    }
+    
+  </script>
+</body>
+</html>

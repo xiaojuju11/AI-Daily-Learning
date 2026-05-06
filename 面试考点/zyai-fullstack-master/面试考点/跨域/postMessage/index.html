@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>一级页面</h1>
+  <iframe src="http://127.0.0.1:8080/" width="500" height="500" frameborder="0"></iframe>
+
+  <!-- <script>
+    const obj = {name: '探长', age: 18}
+    const iframe = document.querySelector('iframe')
+
+    iframe.onload = function() {
+      this.contentWindow.postMessage(obj, 'http://127.0.0.1:8080/')
+
+      window.onmessage = function(e) {
+        console.log('从二级页面收到消息:', e.data);
+      }
+    }
+
+  </script> -->
+
+  <script>
+    document.domain = '127.0.0.1'
+    document.querySelector('iframe').onload = function() {
+      console.log(this.contentWindow.data);
+    }
+  </script>
+</body>
+</html>

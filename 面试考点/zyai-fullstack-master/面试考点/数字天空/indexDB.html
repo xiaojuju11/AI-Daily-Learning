@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="insertBtn">插入一条数据</button>
+
+  <script>
+    const dbName = 'myDB'
+    const dbVersion = 1.0
+    const request = indexedDB.open(dbName, dbVersion)
+    let db;
+
+    request.onerror = (event) => {
+      console.log('数据库打开报错')
+    }
+
+    request.onsuccess = (event) => {
+      db = event.target.result
+      console.log('数据库打开成功')
+    }
+
+    request.onupgradeneeded = (event) => {
+      db = event.target.result
+      if (!db.objectStoreNames.contains('people')) {
+        db.createObjectStore('people', {
+          keyPath: 'id'
+        })
+      }
+    }
+
+
+    const insertBtn = document.getElementById('insertBtn')
+    insertBtn.addEventListener('click', () => {
+      // localStorage.setItem('he', '黄鹤')
+      // console.log(localStorage.getItem('he'));
+      // localStorage.removeItem('he')
+      // localStorage.clear()
+
+      // sessionStorage.setItem('he', '黄鹤')
+      // console.log(sessionStorage.getItem('he'));
+      // sessionStorage.removeItem('he')
+      // sessionStorage.clear()
+      // console.log(db);
+      const transaction = db.transaction(['people'], 'readwrite') // 开启一个事务
+      const objectStore = transaction.objectStore('people')
+      const res = objectStore.add({
+        id: 1,
+        title: 'html简介',
+        author: '张三',
+        createAt: (new Date().getTime()).valueOf()
+      })
+
+      res.onsuccess = (event) => {
+        console.log('数据插入成功')
+      }
+    })
+  </script>
+</body>
+</html>

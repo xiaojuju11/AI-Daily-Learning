@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="file" name="" id="imageInput">
+
+  <div id="preview">
+    <img src="" alt="" id="imageOutput">
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const imageOutput = document.getElementById('imageOutput');
+
+    imageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageData = e.target.result;
+
+        const worker = new Worker('worker.js');  // 创建一个 worker 线程
+        worker.postMessage({ imageData: new Blob([imageData]), width: 200, height: 200, quality: 0.8 });  // 向 worker 线程发送消息
+
+        worker.onmessage = (e) => {  // 接收 worker 线程发送的消息
+          const compressedFile = e.data;
+          console.log(compressedFile.size);
+          imageOutput.src = URL.createObjectURL(compressedFile);
+        }
+
+      }
+
+    })
+  </script>
+
+</body>
+
+</html>

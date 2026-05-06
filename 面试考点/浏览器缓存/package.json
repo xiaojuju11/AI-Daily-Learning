@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "node http-static.js"
+  },
+  "dependencies": {
+    "mime": "^3.0.0"
+  }
+}

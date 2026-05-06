@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>二级页面 -- <span id="name"></span></h2>
+  <!-- <script>
+    window.onmessage = function(e) {
+      console.log(e.data);
+      document.getElementById('name').innerHTML = e.data.name
+
+      setTimeout(() => {
+        let {age} = e.data
+        age++
+        e.source.postMessage({name: e.data.name, age}, e.origin)
+      }, 3000)
+    }
+  </script> -->
+
+  <script>
+    document.domain = '127.0.0.1'
+    var data = '二级页面数据'
+  </script>
+</body>
+</html>

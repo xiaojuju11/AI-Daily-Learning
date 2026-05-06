@@ -1,0 +1,6 @@
+.box{
+  border: 10px solid transparent;
+  border-style: solid;
+  border-image: url('./bd.webp');
+  border-image-slice: 30%;
+}

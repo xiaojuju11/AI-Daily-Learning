@@ -37,4 +37,4 @@ RAG是一种技术，旨在让大模型回答问题的时候可以提前先去�
 
 - 构建向量检索
 1. embedding 模型 来将文本转换成向量
-2. 向量数据库 来存储向量 (vector database)
+2. 向量数据库 来存储向量 (vector database) npm i vectra

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <input type="file" id="input">
+  <button id="upload">上传</button>
+
+  <script>
+    const input = document.getElementById('input')
+    const upload = document.getElementById('upload')
+    let fileObj = null
+
+    // 处理文件选择事件
+    function handleChange(e) {
+      // console.log(e.target.files);
+      const [file] = e.target.files
+      fileObj = file
+    }
+
+    // 处理上传事件
+    function handleUpload() {
+      if (!fileObj) {
+        alert('请选择一个文件')
+        return
+      }
+    
+      // 将fileObj进行切片
+      const chunkList = createChunk(fileObj)
+      // console.log(chunkList);
+      const chunks = chunkList.map(({file}, index) => {
+        return {
+          file,
+          size: file.size,
+          chunkName: `${fileObj.name}-${index}`,
+          fileName: fileObj.name,
+          index
+        }
+      })
+      // console.log(chunks);
+      uploadChunks(chunks)
+      
+    }
+
+    // 将 input 中的文件资源切片
+    input.addEventListener('change', handleChange)
+    // 上传文件
+    upload.addEventListener('click', handleUpload)
+
+
+    function createChunk(file, size = 5 * 1024 * 1024) {
+      const chunkList = []
+      let cur = 0
+      while (cur < file.size) {
+        chunkList.push(
+          {file: file.slice(cur, cur + size)}
+        )
+        cur += size
+      }
+      return chunkList
+    }
+  
+    function uploadChunks(chunks) {
+      const formChunks = chunks.map(({file, fileName, chunkName, size, index}) => {
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('fileName', fileName)
+        formData.append('chunkName', chunkName)
+        return {formData, index}
+      })
+
+      const requestList = formChunks.map(({formData, index}) => {
+        return axios.post('http://localhost:3000/upload', formData)
+      })
+
+      Promise.all(requestList).then(res => {
+        axios.post('http://localhost:3000/merge', {
+          fileName: fileObj.name,
+          size: 5 * 1024 * 1024
+        }).then(res => {
+          console.log(res.data);
+        })
+      })
+      
+    }
+  </script>
+</body>
+</html>

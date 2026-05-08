@@ -151,6 +151,9 @@ pip uninstall transformers -y
 pip cache purge
 pip install transformers==4.50.0
 
+
+
+
 import transformers
 print(transformers.__version__)
 
@@ -188,4 +191,7 @@ trainer = Trainer(
 print("——开始训练——")
 trainer.train()
 print("——训练完成——") 
--->
+ -->
+
+
+pip uninstall apex -y

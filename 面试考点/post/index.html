@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>前端所有请求方式测试</title>
+</head>
+<body>
+  <h1>前端 4 种请求方式完整版</h1>
+
+  <button onclick="sendForm()">1. 表单 GET 请求</button>
+  <button onclick="sendXhr()">2. AJAX(XHR) 请求</button>
+  <button onclick="sendFetch()">3. Fetch 请求</button>
+  <button onclick="sendAxios()">4. Axios 请求</button>
+
+  <h3>后端返回结果：</h3>
+  <p id="result" style="color:red;font-size:18px;"></p>
+
+  <!-- 引入 axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    // 后端地址
+    const url = "http://localhost:3000/api/hello";
+
+    // ======================================
+    // 1. 表单方式（模拟）
+    // ======================================
+    function sendForm() {
+      // 页面会跳转到后端地址
+      location.href = url;
+    }
+
+    // ======================================
+    // 2. 原生 AJAX（XMLHttpRequest）
+    // ======================================
+    function sendXhr() {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", url);
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          let data = JSON.parse(xhr.responseText);
+          document.getElementById("result").innerText = data.message;
+        }
+      };
+      xhr.send();
+    }
+
+    // ======================================
+    // 3. Fetch（ES6 官方原生）
+    // ======================================
+    async function sendFetch() {
+      let res = await fetch(url);
+      let data = await res.json();
+      document.getElementById("result").innerText = data.message;
+    }
+
+    // ======================================
+    // 4. Axios（企业最常用、最简单）
+    // ======================================
+    async function sendAxios() {
+      let res = await axios.get(url);
+      document.getElementById("result").innerText = res.data.message;
+    }
+  </script>
+</body>
+</html>

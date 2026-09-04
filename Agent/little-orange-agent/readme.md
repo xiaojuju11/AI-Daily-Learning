@@ -17,6 +17,7 @@
 # ai 这个SDK 
 - generateText 生成文本
 - streamText 流式生成文本
+调用这两个方法一定会触发openai里的doGenerate或者doStream这个函数
 
 # 进程持续
 - readline 读取用户输入

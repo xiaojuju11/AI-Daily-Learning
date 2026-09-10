@@ -13,7 +13,7 @@ export const weatherTool = {
         required:['city'],
         additionalProperties:false,
     }),
-    executor:async({city}:{city:string})=>{
+    execute:async({city}:{city:string})=>{
         const mockWeather:Record<string,any> = {
             '南昌':'晴，30摄氏度，东南风2级',
             '北京':'晴，25摄氏度，东北风1级',

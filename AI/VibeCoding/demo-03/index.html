@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>CampusTask · 校园任务管理器</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<p id="storage-warning" class="banner" hidden></p>
+
+<header class="app-header">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">C</span>
+    <span class="brand-text">
+      <strong class="brand-name">CampusTask</strong>
+      <span class="brand-sub">校园任务管理器</span>
+    </span>
+  </div>
+  <nav class="tabs" aria-label="视图切换">
+    <button type="button" class="tab" data-view="tasks">任务清单</button>
+    <button type="button" class="tab" data-view="schedule">周课表</button>
+    <button type="button" class="tab" data-view="courses">课程管理</button>
+  </nav>
+</header>
+
+<main class="app-main">
+
+  <!-- ==================== 任务清单 ==================== -->
+  <section id="view-tasks" class="view">
+    <div id="stats" class="stats"></div>
+
+    <div class="toolbar">
+      <div class="toolbar-row">
+        <input type="search" id="search-input" class="input search" placeholder="搜索任务标题" autocomplete="off" aria-label="搜索任务标题">
+        <select id="sort-select" class="input" aria-label="排序方式">
+          <option value="due">按截止日期排序</option>
+          <option value="priority">按优先级排序</option>
+          <option value="created">按创建时间排序</option>
+        </select>
+        <button type="button" class="btn btn-primary" data-action="new-task">+ 新建任务</button>
+      </div>
+      <div class="toolbar-row">
+        <select id="filter-course" class="input" aria-label="按课程筛选"></select>
+        <select id="filter-category" class="input" aria-label="按分类筛选"></select>
+        <select id="filter-status" class="input" aria-label="按完成状态筛选">
+          <option value="all">全部状态</option>
+          <option value="active">仅未完成</option>
+          <option value="done">仅已完成</option>
+        </select>
+        <select id="filter-priority" class="input" aria-label="按优先级筛选"></select>
+        <button type="button" class="btn btn-ghost" data-action="reset-filters">重置筛选</button>
+      </div>
+    </div>
+
+    <div id="task-list"></div>
+  </section>
+
+  <!-- ==================== 周课表 ==================== -->
+  <section id="view-schedule" class="view" hidden>
+    <div class="section-head">
+      <h2 class="section-title">周课表</h2>
+      <button type="button" class="btn btn-primary" data-action="new-course">+ 新增课程</button>
+    </div>
+    <div id="schedule-wrap" class="schedule-wrap"></div>
+  </section>
+
+  <!-- ==================== 课程管理 ==================== -->
+  <section id="view-courses" class="view" hidden>
+    <div class="section-head">
+      <h2 class="section-title">课程管理</h2>
+      <button type="button" class="btn btn-primary" data-action="new-course">+ 新增课程</button>
+    </div>
+    <div id="course-list" class="course-grid"></div>
+  </section>
+
+</main>
+
+<!-- ==================== 任务表单 ==================== -->
+<dialog id="task-dialog" class="dialog">
+  <form id="task-form" class="dialog-form">
+    <h2 id="task-dialog-title" class="dialog-title">新建任务</h2>
+    <input type="hidden" name="id">
+
+    <div class="field">
+      <label for="task-title">标题 <span class="req">*</span></label>
+      <input id="task-title" class="input" name="title" type="text" maxlength="80" required placeholder="例如：完成数据结构实验报告">
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label for="task-course">所属课程</label>
+        <select id="task-course" class="input" name="courseId"></select>
+      </div>
+      <div class="field">
+        <label for="task-category">分类</label>
+        <select id="task-category" class="input" name="category"></select>
+      </div>
+      <div class="field">
+        <label for="task-due">截止日期</label>
+        <input id="task-due" class="input" name="due" type="date">
+      </div>
+      <div class="field">
+        <label for="task-priority">优先级</label>
+        <select id="task-priority" class="input" name="priority"></select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="task-location">地点</label>
+      <input id="task-location" class="input" name="location" type="text" maxlength="60" placeholder="考试 / 活动地点，例如：教三 401">
+    </div>
+
+    <div class="field">
+      <label for="task-note">备注</label>
+      <textarea id="task-note" class="input" name="note" rows="3" maxlength="500"></textarea>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" data-action="close-dialog">取消</button>
+      <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ==================== 课程表单 ==================== -->
+<dialog id="course-dialog" class="dialog">
+  <form id="course-form" class="dialog-form">
+    <h2 id="course-dialog-title" class="dialog-title">新增课程</h2>
+    <input type="hidden" name="id">
+
+    <div class="field-grid">
+      <div class="field">
+        <label for="course-name">课程名 <span class="req">*</span></label>
+        <input id="course-name" class="input" name="courseName" type="text" maxlength="60" required placeholder="例如：数据结构">
+      </div>
+      <div class="field">
+        <label for="course-teacher">教师</label>
+        <input id="course-teacher" class="input" name="teacher" type="text" maxlength="40">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="course-location">上课地点</label>
+      <input id="course-location" class="input" name="location" type="text" maxlength="60" placeholder="例如：教三 401">
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <span class="field-label">上课时间</span>
+        <button type="button" class="btn btn-small" data-action="add-schedule-row">+ 添加时间段</button>
+      </div>
+      <div id="schedule-rows" class="schedule-rows"></div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" data-action="close-dialog">取消</button>
+      <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function myWebSocket(url, params) {
+      const ws = new WebSocket(url)
+      ws.onopen = () => {  // 连接成功
+        ws.send(JSON.stringify(params))  // 向后端发送参数
+      }
+      ws.onmessage = (e) => {  // 接收后端返回的消息
+        console.log('收到服务器的消息:', e.data)
+      }
+    }
+
+    myWebSocket('ws://localhost:3000', {age: 18})
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>我是父页面</h2>
+
+  <iframe src="http://127.0.0.1:8080" width="800" height="800" frameborder="0"></iframe>
+
+  <script>
+    const obj = {name: '涛哥', age: 18}
+    const iframe = document.querySelector('iframe')
+
+    iframe.onload = function () {  // 等待子页面加载完成
+      this.contentWindow.postMessage(JSON.stringify(obj), 'http://127.0.0.1:8080')
+
+      window.onmessage = function (e) {
+        console.log(e.data, '子页面返回的年龄')
+        
+      }
+    }
+
+  </script>
+</body>
+</html>

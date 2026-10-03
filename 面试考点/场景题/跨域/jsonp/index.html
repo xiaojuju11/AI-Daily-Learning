@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <img src="https://gips1.baidu.com/it/u=3249564727,2553492563&fm=3074&app=3074&f=PNG?w=2048&h=2048" alt="">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+
+  <!-- <script src="http://192.168.1.31:3000/user"></script> -->
+
+  <script>
+    function jsonp(url, cb) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = `${url}?cb=${cb}`   // http://localhost:3000?cb=callback
+        document.body.appendChild(script)
+
+        window[cb] = function (data) {
+          resolve(data)
+        }
+
+        document.body.removeChild(script)
+
+      })
+    }
+    
+    jsonp('http://localhost:3000', 'callback').then(res => {
+      console.log(res)
+    })
+  </script>
+</body>
+</html>

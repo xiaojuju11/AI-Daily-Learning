@@ -1,0 +1,22 @@
+{
+  "github_user": "xiaojuju11",
+  "github_email": "3432909760@qq.com",
+  "workspace": "D:\\AIforstudy",
+  "run_at": "20:00",
+  "timezone": "Asia/Shanghai",
+  "repos": [
+    { "name": "AI-Daily-Learning", "path": "D:\\AIforstudy",                    "github": true },
+    { "name": "OrangeVerse",       "path": "D:\\AIforstudy\\Agent\\repos\\OrangeVerse",       "github": true },
+    { "name": "parent_kid_edu",    "path": "D:\\AIforstudy\\Agent\\repos\\parent_kid_edu",    "github": true },
+    { "name": "react-playground",  "path": "D:\\AIforstudy\\Agent\\repos\\react-playground",  "github": true },
+    { "name": "chatbox-demo",      "path": "D:\\AIforstudy\\Agent\\repos\\chatbox-demo",      "github": true }
+  ],
+  "rules": [
+    "每天只挑一个仓库，优先选与最近一次不同的仓库（轮换）",
+    "改动必须是小而真实的功能完善或代码优化，禁止空提交 / 只改空格 / 伪造时间戳",
+    "涉及逻辑的改动必须补测试（node --test / 现有测试套件），并至少跑通一次构建或测试",
+    "提交信息用 conventional commits，正文说明改了什么、为什么、如何验证",
+    "提交前确认 git user.name / user.email 与本文件一致，保证 GitHub 归属正确",
+    "推送后回查 GitHub API，确认提交出现在 main 分支"
+  ]
+}

@@ -9,6 +9,10 @@ ReactNative/expo/android-sdk/
 sync.log
 *.log
 
+# 每日提交 agent 的本地工作副本与运行状态（不随主仓库同步）
+Agent/repos/
+Agent/daily-commit/state.json
+
 # System files
 .DS_Store
 Thumbs.db

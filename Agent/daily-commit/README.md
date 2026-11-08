@@ -109,3 +109,16 @@ Invoke-RestMethod -Headers @{ 'User-Agent'='dsh-agent' } `
 - 定时提醒由 DSH 会话调度。**App 关闭期间不会执行**；重新打开后只补发最近一次到期提醒，不会把缺失的几天全部补齐。
 - 若某天网络 / 凭据失败，当天就没有绿块；第二天恢复后按轮换继续，不会伪造补提交。
 - GitHub 统计有几分钟延迟，`git push` 成功不代表贡献图立刻变色，属正常现象。
+
+## 漏天补救（catch-up）
+
+每次开始执行前先跑：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File D:\AIforstudy\Agent\daily-commit\catchup.ps1
+```
+
+- 退出码 `0`：没有漏天，继续今天的流程。
+- 退出码 `2`：列出了漏掉的日期与当天该做的仓库，按「最早的一天优先」依次补做真实改动。
+
+`catchup.ps1` 只写 `last-check.json`（检查点），不修改任何仓库；补做时仍然走「改进 → 测试 → 提交 → 推送」的完整流程，绝不通过改时间戳来伪造历史提交。

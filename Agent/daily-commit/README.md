@@ -1,4 +1,4 @@
-# 每日 GitHub 绿块 · 部署与执行说明
+﻿# 每日 GitHub 绿块 · 部署与执行说明
 
 目标：**每天挑选一个仓库，做一处真实的代码优化或功能完善，提交并推送到 GitHub main 分支**，保证贡献图每天都有绿块。
 
@@ -9,13 +9,15 @@ Agent/
 ├─ daily-commit/
 │  ├─ config.json         # 仓库清单、轮换规则、提交身份、执行时间
 │  ├─ rotation.ps1        # 轮换计算 + 仓库健康检查（只读）
+│  ├─ catchup.ps1         # 漏天检测
+│  ├─ history.md          # 每日改动记录
 │  ├─ README.md           # 本文件：执行流程
 │  └─ state.json          # 最近一次执行的记录（脚本自动维护）
-└─ repos/                 # 5 个仓库的本地工作副本
+└─ repos/                 # 4 个轮换仓库的本地工作副本
    ├─ OrangeVerse/
    ├─ parent_kid_edu/
    ├─ react-playground/
-   └─ chatbox-demo/
+   └─ chatbox-demo/       # 已移出轮换，不再提交
 ```
 
 `AI-Daily-Learning` 的工作副本就是 `D:\AIforstudy` 本身。
@@ -25,7 +27,7 @@ Agent/
 ### 0. 先跑一遍轮换检查
 
 ```powershell
-pwsh -File D:\AIforstudy\Agent\daily-commit\rotation.ps1
+powershell -ExecutionPolicy Bypass -File D:\AIforstudy\Agent\daily-commit\rotation.ps1
 ```
 
 输出会告诉你：今天是第几轮、该做哪个仓库、每个仓库是否 clean / 是否落后远端 / 今天是否已有提交。
@@ -61,7 +63,6 @@ git -C <repo> pull --ff-only github main
 | OrangeVerse | `npm test` + `npm run build` |
 | parent_kid_edu | `cd frontend; npm run build`；`cd backend; node -e "require('./app')"` 之类的启动自检 |
 | react-playground | `npm run build` + `npm run lint` |
-| chatbox-demo | `python -m py_compile <改动的 .py>` |
 
 ### 4. 提交
 
@@ -97,12 +98,14 @@ Invoke-RestMethod -Headers @{ 'User-Agent'='dsh-agent' } `
 | 2026-11-08 | OrangeVerse（首日已手动完成，commit `70acb6c`） |
 | 2026-11-09 | parent_kid_edu |
 | 2026-11-10 | react-playground |
-| 2026-11-11 | chatbox-demo |
-| 2026-11-12 | AI-Daily-Learning |
-| 2026-11-13 | OrangeVerse |
+| 2026-11-11 | AI-Daily-Learning |
+| 2026-11-12 | OrangeVerse |
+| 2026-11-13 | parent_kid_edu |
 | … | 循环 |
 
-计算方式：`index = ((今天 - 2026-11-08).Days + 1) mod 5`。第 0 天（11-08）已手工完成 `repos[0]`，所以从第 1 天起索引偏移 +1，避免紧接着重复同一个仓库。
+> `chatbox-demo` 已被移出轮换（见 `config.json` 的 `excluded`），以后不再向该仓库提交。
+
+计算方式：`index = ((今天 - 2026-11-08).Days + 1) mod 4`。第 0 天（11-08）已手工完成 `repos[0]`，所以从第 1 天起索引偏移 +1，避免紧接着重复同一个仓库。
 
 ## 已知限制
 

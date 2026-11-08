@@ -27,6 +27,13 @@ if (-not (Test-Path -LiteralPath $configPath)) {
 
 $config = Get-Content -LiteralPath $configPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $repos = @($config.repos)
+
+# 公共排除列表：即使用户把某个仓库重新写回 repos，也不纳入轮换
+if ($config.excluded) {
+  $excludedNames = @($config.excluded | ForEach-Object { $_.name })
+  $repos = @($repos | Where-Object { $excludedNames -notcontains $_.name })
+  if ($repos.Count -eq 0) { throw "repos 全部被 excluded 过滤，请检查 config.json" }
+}
 if ($repos.Count -eq 0) { throw 'config.json 里 repos 为空' }
 
 # 轮换基准：2026-11-08 对应 repos[0]（OrangeVerse，首日已手动完成）。

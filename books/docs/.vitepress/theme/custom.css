@@ -1,0 +1,81 @@
+/* 橙子书库：偏暖的阅读主题，正文宽度收窄，长文更耐读 */
+
+:root {
+  --vp-font-family-base:
+    'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --vp-font-family-mono:
+    'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, monospace;
+
+  --vp-c-brand-1: #d1541f;
+  --vp-c-brand-2: #ea6a2c;
+  --vp-c-brand-3: #f08a52;
+  --vp-c-brand-soft: rgba(234, 106, 44, 0.14);
+}
+
+.dark {
+  --vp-c-brand-1: #f08a52;
+  --vp-c-brand-2: #ea6a2c;
+  --vp-c-brand-3: #d1541f;
+  --vp-c-brand-soft: rgba(234, 106, 44, 0.16);
+}
+
+/* 读书的正文别铺满整屏 */
+@media (min-width: 960px) {
+  .VPDoc .content-container {
+    max-width: 46rem;
+  }
+}
+
+/* 正文行距和段间距，默认偏紧 */
+.vp-doc p,
+.vp-doc li {
+  line-height: 1.85;
+}
+
+.vp-doc h2 {
+  margin-top: 2.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.vp-doc h3 {
+  margin-top: 2rem;
+}
+
+/* 首页书卡 */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 24px 0 8px;
+}
+
+.book-card {
+  display: block;
+  padding: 20px 22px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  background: var(--vp-c-bg-soft);
+  text-decoration: none !important;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.book-card:hover {
+  border-color: var(--vp-c-brand-2);
+  transform: translateY(-2px);
+}
+
+.book-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+.book-card p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--vp-c-text-2);
+}

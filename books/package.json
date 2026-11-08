@@ -1,0 +1,17 @@
+{
+  "name": "orange-books",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "把每天学的东西，写成一本本可以读完的书",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "new": "node scripts/new-chapter.mjs",
+    "import": "node scripts/import-note.mjs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

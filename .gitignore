@@ -3,7 +3,12 @@ node_modules/
 **/node_modules/
 .venv/
 **/.venv/
+**/myvenv/
 ReactNative/expo/android-sdk/
+
+# Python caches
+__pycache__/
+*.py[cod]
 
 # Logs & temporary files
 sync.log

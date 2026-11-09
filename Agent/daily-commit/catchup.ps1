@@ -45,10 +45,24 @@ $missed = @()
 $cursor = $lastChecked.Date
 if ($cursor -lt $today) {
   while ($cursor -lt $today) {
-    $offset = [int](($cursor - $baseDate).TotalDays)
-    $index = ($offset + 1) % $repos.Count
-    if ($index -lt 0) { $index += $repos.Count }
-    $missed += [pscustomobject]@{ date = $cursor.ToString('yyyy-MM-dd'); repo = $repos[$index].name; path = $repos[$index].path }
+    # 先核实这一天到底有没有提交：任一仓库在该日有提交就不算漏
+    $dayStart = $cursor.ToString('yyyy-MM-dd') + 'T00:00:00+08:00'
+    $dayEnd = $cursor.AddDays(1).ToString('yyyy-MM-dd') + 'T00:00:00+08:00'
+    $hasCommit = $false
+    foreach ($repo in $repos) {
+      $path = [string]$repo.path
+      if (-not (Test-Path -LiteralPath (Join-Path $path '.git'))) { continue }
+      try {
+        $log = & git -C $path log --all --since $dayStart --until $dayEnd --oneline 2>$null
+        if ($LASTEXITCODE -eq 0 -and @($log).Count -gt 0) { $hasCommit = $true; break }
+      } catch { }
+    }
+    if (-not $hasCommit) {
+      $offset = [int](($cursor - $baseDate).TotalDays)
+      $index = ($offset + 1) % $repos.Count
+      if ($index -lt 0) { $index += $repos.Count }
+      $missed += [pscustomobject]@{ date = $cursor.ToString('yyyy-MM-dd'); repo = $repos[$index].name; path = $repos[$index].path }
+    }
     $cursor = $cursor.AddDays(1)
   }
 }

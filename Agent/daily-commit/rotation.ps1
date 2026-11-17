@@ -13,6 +13,7 @@ param(
   [Parameter()][datetime]$Date = (Get-Date),
   [Parameter()][switch]$Json,
   [Parameter()][switch]$Record,
+  [Parameter()][AllowEmptyString()][string]$RecordRepo = '',
   [Parameter()][switch]$Deep
 )
 
@@ -241,15 +242,28 @@ Write-Host ' 下一步: 按 README.md 第 1~6 步执行（同步 -> 改进 -> �
 Write-Host ''
 
 # 记录本次执行（仅在 -Record 时写入；不改任何仓库，只写 state.json）
+# 若当天实际做的不是轮换算出来的仓库（比如跳过了上次刚做过的那个），用 -Repo 指定
 if ($Record) {
+  $recordName = $target.name
+  $recordPath = $target.path
+  $recordIndex = $index
+  if ($RecordRepo) {
+    $matched = $repos | Where-Object { $_.name -eq $RecordRepo } | Select-Object -First 1
+    if (-not $matched) {
+      throw "state 记录失败：$RecordRepo 不在 repos 列表里"
+    }
+    $recordName = $matched.name
+    $recordPath = $matched.path
+    $recordIndex = [array]::IndexOf(@($repos.name), $matched.name)
+  }
   $stateObject = [pscustomobject]@{
-    date      = $todayString
-    repo      = $target.name
-    path      = $target.path
-    index     = $index
-    hasCommit = $todayAnyCommit
+    date       = $todayString
+    repo       = $recordName
+    path       = $recordPath
+    index      = $recordIndex
+    hasCommit  = $todayAnyCommit
     recordedAt = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss zzz')
   }
   $stateObject | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $statePath -Encoding UTF8
-  Write-Host (" 已记录到 state.json: {0} -> {1}" -f $todayString, $target.name) -ForegroundColor DarkCyan
+  Write-Host (" 已记录到 state.json: {0} -> {1}" -f $todayString, $recordName) -ForegroundColor DarkCyan
 }

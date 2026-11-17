@@ -1,4 +1,4 @@
-﻿# 每日 GitHub 绿块 · 部署与执行说明
+# 每日 GitHub 绿块 · 部署与执行说明
 
 目标：**每天挑选一个仓库，做一处真实的代码优化或功能完善，提交并推送到 GitHub main 分支**，保证贡献图每天都有绿块。
 
@@ -88,6 +88,26 @@ Invoke-RestMethod -Headers @{ 'User-Agent'='dsh-agent' } `
 ### 6. 记账
 
 把结果写进 `state.json`（脚本会自动写），并把当天的改动摘要追加到 `daily-commit/history.md`，方便日后回顾。
+
+```powershell
+# 正常情况：记录轮换算出的目标仓库
+powershell -ExecutionPolicy Bypass -File D:\AIforstudy\Agent\daily-commit\rotation.ps1 -Record
+
+# 跳过了轮换目标（例如今天的目标上次刚做过）：用 -RecordRepo 记录实际做的仓库
+powershell -ExecutionPolicy Bypass -File D:\AIforstudy\Agent\daily-commit\rotation.ps1 -Record -RecordRepo react-playground
+```
+
+> 注意：参数名必须叫 `-RecordRepo` 而不是 `-Repo`——`$Repo` 会和 `foreach ($repo in $repos)` 的循环变量撞名（PowerShell 变量名不区分大小写），带 `[string]` 类型时会把手里的对象强转成字符串，脚本直接报 `Test-Path: 空字符串`。
+
+## 网络/代理
+
+本机 git 直连 GitHub 会 `Connection was reset`，因为系统代理（`127.0.0.1:7897`）只被 .NET/浏览器读取，git 不会自动继承。已在各仓库的本地配置里写入：
+
+```powershell
+git -C <repo> config http.proxy http://127.0.0.1:7897
+```
+
+换机器或换代理端口时，重新执行这条命令即可；`git -c http.proxy=...` 也可以只对单次命令生效。
 
 ## 轮换顺序
 

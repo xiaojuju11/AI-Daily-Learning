@@ -41,6 +41,26 @@ if (-not $lastChecked -and (Test-Path -LiteralPath $statePath)) {
 }
 if (-not $lastChecked) { $lastChecked = $today }
 
+# 先 fetch：否则本地副本落后于远端，会把「别人（或自己的另一台机器）已经提交过」
+# 的日期误判成漏做。慢速超过 20 秒就放弃，避免网络不好时卡住整个流程。
+$fetchFailed = @()
+foreach ($repo in $repos) {
+  $path = [string]$repo.path
+  if (-not (Test-Path -LiteralPath (Join-Path $path '.git'))) { continue }
+  $remoteName = $null
+  foreach ($candidate in @('github', 'origin')) {
+    $probe = & git -C $path remote 2>$null
+    if ($probe -contains $candidate) { $remoteName = $candidate; break }
+  }
+  if (-not $remoteName) { continue }
+  try {
+    & git -C $path -c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20 fetch --quiet $remoteName main 2>$null
+    if ($LASTEXITCODE -ne 0) { $fetchFailed += $repo.name }
+  } catch {
+    $fetchFailed += $repo.name
+  }
+}
+
 $missed = @()
 $cursor = $lastChecked.Date
 if ($cursor -lt $today) {
@@ -70,6 +90,10 @@ if ($cursor -lt $today) {
 # 记录本次检查点（只写 last-check.json，不碰仓库）
 [pscustomobject]@{ lastChecked = $today.ToString('yyyy-MM-dd'); checkedAt = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss zzz') } |
   ConvertTo-Json | Set-Content -LiteralPath $checkPath -Encoding UTF8
+
+if ($fetchFailed.Count -gt 0) {
+  Write-Host (" 注意：以下仓库 fetch 失败，下面的结论只基于本地已有提交：{0}" -f ($fetchFailed -join '、')) -ForegroundColor DarkYellow
+}
 
 if ($missed.Count -eq 0) {
   Write-Host ' 没有漏掉的日期，今天按正常流程执行即可。' -ForegroundColor Green

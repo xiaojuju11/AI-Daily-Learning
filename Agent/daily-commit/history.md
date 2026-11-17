@@ -9,7 +9,7 @@
 | 2026-11-17 | react-playground | `test(compiler)`：把 `normalizePath`/`getCandidates`/`resolveModule` 从 `compiler.ts` 抽到 `resolveModule.ts` 并导出纯函数 `resolveModulePath`；新增 7 个单测覆盖省略后缀补全、精确命中、子目录与 `../`、`.tsx` 优先级、未命中返回 null；`package.json` 增加 `npm test` | `npm test` 7/7；`npm run lint` 通过；`npm run build` 通过 | `0f079fa` |
 | 2026-11-17 | AI-Daily-Learning | 工具修复：rotation.ps1 新增 `-RecordRepo`，处理「实际做的仓库 ≠ 轮换目标」的记账；修复 `-Repo` 参数名与 `foreach ($repo ...)` 变量冲突（被强转成字符串 → Test-Path 空路径报错）；README 补代理说明 | 脚本重跑正常；state.json 记为 react-playground | 见本次提交 |
 
-> 漏做记录（App 未运行，无法补历史提交，不伪造时间戳）：2026-11-10、11-11、11-13、11-14。
+> 日历核对（2026-11-17）：GitHub 贡献图显示 11-10 至 11-16 每天都有提交（level 1~4），说明**并没有真的漏做**。catchup.ps1 之前误报，是因为本地副本落后于远端、又没有先 fetch。已修复：判定前先 `git fetch`，fetch 失败的仓库会在输出里点名提示。
 >
 > 网络备注：本机 git 走的是系统代理 `127.0.0.1:7897`（.NET 默认读取、git/curl 不读），直连会 `Connection was reset`。已在 5 个仓库的本地 git config 写入 `http.proxy`，否则 push 会随机失败。
 
